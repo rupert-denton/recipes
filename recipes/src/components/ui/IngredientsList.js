@@ -1,7 +1,14 @@
 import './IngredientsList.css'
 
+import IngredientNameQuant from './IngredientNameQuant'
 function IngredientsList() {
-  return <div class="ingredients-list"></div>
+  return (
+    <div className="ingredients-list">
+      <IngredientNameQuant></IngredientNameQuant>
+      <IngredientNameQuant></IngredientNameQuant>
+      <IngredientNameQuant></IngredientNameQuant>
+    </div>
+  )
 }
 
 export default IngredientsList

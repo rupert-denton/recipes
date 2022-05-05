@@ -1,7 +1,12 @@
 import './Method.css'
 
+import MethodStep from './MethodStep'
 function Method() {
-  return <div class="method"></div>
+  return (
+    <div className="method">
+      <MethodStep></MethodStep>
+    </div>
+  )
 }
 
-export default Method()
+export default Method
