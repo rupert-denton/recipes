@@ -1,0 +1,15 @@
+.small-header{
+  margin-bottom: 1rem;
+  font-size: .8rem;
+  color: black;
+  font-weight: 550;
+}
+
+.source{
+  margin-top: 1.25rem;
+  justify-content: flex-start;
+  font-size: .7rem;
+  color: black;
+  padding: 0.25rem 0rem;
+  border-style: solid none
+}
