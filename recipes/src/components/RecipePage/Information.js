@@ -7,9 +7,9 @@ import RecipeIngredientsMethod from './RecipeIngredientsMethod'
 function Information() {
   return (
     <div className="blurb">
-      <RecipeMeta></RecipeMeta>
-      <Blurb></Blurb>
-      <RecipeIngredientsMethod></RecipeIngredientsMethod>
+      <RecipeMeta />
+      <Blurb />
+      <RecipeIngredientsMethod />
     </div>
   )
 }

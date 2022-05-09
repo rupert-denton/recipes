@@ -1,11 +1,13 @@
 import './App.css'
 
-import PageContainer from './components/ui/PageContainer'
+import PageContainer from './components/RecipePage/PageContainer'
+import FormContainer from './components/RecipeForm/FormContainer'
 
 function App() {
   return (
     <div className="App">
-      <PageContainer></PageContainer>
+      <FormContainer />
+      <PageContainer />
     </div>
   )
 }
