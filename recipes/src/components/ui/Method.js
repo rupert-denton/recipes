@@ -4,7 +4,7 @@ import MethodStep from './MethodStep'
 function Method() {
   return (
     <div className="method">
-      <MethodStep />
+      <MethodStep></MethodStep>
     </div>
   )
 }
