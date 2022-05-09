@@ -1,0 +1,27 @@
+.recipe-form-container{
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.recipe-form{
+  display: flex;
+  flex-direction: column;
+  padding: 0rem 3rem 3rem 1rem
+}
+
+.recipe-element{
+  display: flex;
+  flex-direction: column;
+}
+
+.recipe-title{
+  align-items: flex-start;
+}
+
+.recipe-ingredients{
+  margin: 1rem 0rem 1rem 0rem
+}
+
+.ingredient{;
+  margin-bottom: .5rem;
+}
