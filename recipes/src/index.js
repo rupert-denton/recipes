@@ -3,12 +3,18 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Recipe from './routes/Recipe'
+import RecipeForm from './routes/RecipeForm'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <BrowserRouter>
-    <App />
+    <Routes>
+      <Route path="/" element={<App />} />
+      <Route path="recipe" element={<Recipe />} />
+      <Route path="/newrecipe" element={<RecipeForm />} />
+    </Routes>
   </BrowserRouter>
 )
 

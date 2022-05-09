@@ -7,15 +7,12 @@ import { Link } from 'react-router-dom'
 export default function App() {
   return (
     <div className="App">
-      <h1>Recipes!</h1>
-      <nav
-        style={{
-          borderBottom: 'solid 1px',
-          paddingBottom: '1rem',
-        }}
-      >
-        <Link to="/recipes">Recipes</Link> |<Link to="/new">New Recipe</Link>
-      </nav>
+      <h1>Recipes</h1>
+      <div>
+        <Link to="/newrecipe">New Recipe</Link>
+      </div>
+
+      <Link to="/recipe">Carbonara</Link>
     </div>
   )
 }
