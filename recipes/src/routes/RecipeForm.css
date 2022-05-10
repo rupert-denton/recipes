@@ -1,3 +1,11 @@
+input, select, button{
+  font-size: 1rem
+}
+
+button{
+  margin: 1rem 0rem 0rem 0rem;
+}
+
 .recipe-form-container{
   display: grid;
   grid-template-columns: 1fr;
@@ -22,6 +30,15 @@
   margin: 1rem 0rem 1rem 0rem
 }
 
-.ingredient{;
+.ingredient-triad{
+  display: grid;
+  grid-template-columns: 5fr 1fr 1fr;
   margin-bottom: .5rem;
 }
+
+.quantity, .dropdown{
+  margin:0rem 0rem 0rem 1rem;
+}
+
+
+

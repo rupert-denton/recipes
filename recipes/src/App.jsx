@@ -9,10 +9,10 @@ export default function App() {
     <div className="App">
       <h1>Recipes</h1>
       <div>
+        <Link to="/testdb">Test Database</Link>
         <Link to="/newrecipe">New Recipe</Link>
+        <Link to="/recipe">Carbonara</Link>
       </div>
-
-      <Link to="/recipe">Carbonara</Link>
     </div>
   )
 }
