@@ -1,4 +1,5 @@
 import './RecipeForm.css'
+import MeasurementDropdown from '../components/ui/MeasurementDropdown'
 
 export default function Recipe() {
   return (
@@ -18,16 +19,38 @@ export default function Recipe() {
           </div>
           <div className="recipe-ingredients recipe-element">
             <label>Ingredients</label>
-            <input className="ingredient" type="text"></input>
-            <input className="ingredient" type="text"></input>
-            <input className="ingredient" type="text"></input>
-            <input className="ingredient" type="text"></input>
-            <input className="ingredient" type="text"></input>
-            <input className="ingredient" type="text"></input>
+            <div className="ingredient-triad">
+              <input className="ingredient" type="text"></input>
+              <input className="quantity" type="text"></input>
+              <MeasurementDropdown />
+            </div>
+            <div className="ingredient-triad">
+              <input className="ingredient" type="text"></input>
+              <input className="quantity" type="text"></input>
+              <MeasurementDropdown />
+            </div>
+            <div className="ingredient-triad">
+              <input className="ingredient" type="text"></input>
+              <input className="quantity" type="text"></input>
+              <MeasurementDropdown />
+            </div>
+            <div className="ingredient-triad">
+              <input className="ingredient" type="text"></input>
+              <input className="quantity" type="text"></input>
+              <MeasurementDropdown />
+            </div>
+            <div className="ingredient-triad">
+              <input className="ingredient" type="text"></input>
+              <input className="quantity" type="text"></input>
+              <MeasurementDropdown />
+            </div>
           </div>
           <div className="recipe-steps recipe-element">
             <label>Steps</label>
             <textarea type="text" rows="10" cols="33"></textarea>
+          </div>
+          <div className="save-button-container">
+            <button className="save-recipe">Submit Recipe</button>
           </div>
         </form>
       </div>
