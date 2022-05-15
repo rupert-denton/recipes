@@ -1,0 +1,52 @@
+input, select, button{
+  font-size: 1rem
+}
+
+button{
+  margin: .5rem 0rem 0rem 0rem;
+}
+
+.recipe-form-container{
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.recipe-form{
+  display: flex;
+  flex-direction: column;
+  padding: 0rem 3rem 3rem 1rem
+}
+
+.recipe-element{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.recipe-title{
+  align-items: flex-start;
+}
+
+.recipe-ingredients{
+  margin: 1rem 0rem 1rem 0rem
+}
+
+.ingredient-triad{
+  display: grid;
+  grid-template-columns: 5fr 1fr 1fr;
+  margin-bottom: .5rem;
+}
+
+.quantity, .dropdown{
+  margin:0rem 0rem 0rem 1rem;
+}
+
+.new-ingredient-container{
+  display: flex;
+  justify-content: center;
+}
+.save-button-container{
+  border-style: solid none none
+}
+
+
