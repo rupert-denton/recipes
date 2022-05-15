@@ -90,22 +90,18 @@ app.post('/ingredient', (req, res) => {
     })
 })
 
-app.get('/getjoinedrecipes', (req, res) => {
+app.get('/getjoinedrecipes/', (req, res) => {
   console.log(req)
   //get recipe id from recipe name sent in fetch request
   pool
-    .query(`SELECT id FROM recipe_table WHERE recipe_name = ?`, [
-      req.params.name,
-    ])
-    // .then((result) => {
-    //   // insert a new query here to get the rest of the recipe with the result
-    //   pool.query(
-    //     `SELECT * FROM ingredientrecipes INNER JOIN recipes ON ingredientrecipes.recipe_id = ${result} INNER JOIN ingredients ON ingredientrecipes.ingredient_id = ingredients.id;`
-    //   )
-    // })
+    .query(
+      `SELECT * FROM ingredientrecipes INNER JOIN recipe_table ON ingredientrecipes.recipe_id = recipe_table.id INNER JOIN ingredients ON ingredientrecipes.ingredient_id = ingredients.id where recipe_name=$1`,
+      [req.query.name]
+    )
     //return results to front end
     .then((result) => {
-      res.status(200).send(result.rows)
+      //console.log(result.rows)
+      res.send(result.rows)
     })
     .catch((error) => {
       console.log(error)
