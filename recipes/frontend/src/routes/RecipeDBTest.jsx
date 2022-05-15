@@ -1,18 +1,31 @@
 import './RecipeForm.css'
 import React, { useState } from 'react'
+import { setMaxListeners } from 'events'
 
+function IngredientList(row) {
+  return <div></div>
+}
 export default function GetRecipe() {
   const [name, setName] = useState('')
+  const [title, setIngr] = useState('')
+  const [ingr, setIngr] = useState('')
+
   const retrieveRecipe = function (e) {
     e.preventDefault()
     console.log(name)
-    fetch('http://localhost:3001/getjoinedrecipes/?param1=name', {
+    fetch(`http://localhost:3001/getjoinedrecipes/?name=${name}`, {
       method: 'GET',
       headers: { 'Content-type': 'application/json' },
-      // body: JSON.stringify({ name: name }),
     })
       .then((resp) => resp.json())
-      .then((json) => console.log(json))
+      .then((json) => {
+        console.log(json)
+        let result = json.map((row, idx) => {
+          return <span key={idx}>{row.ingredient_name}</span>
+        })
+
+        setIngr(result)
+      })
   }
 
   return (
@@ -38,6 +51,8 @@ export default function GetRecipe() {
           </div>
         </form>
       </div>
+
+      <div>{ingr}</div>
     </div>
   )
 }
