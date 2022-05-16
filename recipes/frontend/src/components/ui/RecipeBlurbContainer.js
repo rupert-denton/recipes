@@ -1,10 +1,10 @@
 import './RecipeBlurbContainer.css'
 import Blurb from './Information'
 
-function RecipeBlurbContainer() {
+function RecipeBlurbContainer(ingr) {
   return (
     <div className="recipe-blurb-container">
-      <Blurb></Blurb>
+      <Blurb>{ingr}</Blurb>
     </div>
   )
 }
