@@ -1,30 +1,22 @@
 import './RecipeForm.css'
 import React, { useState } from 'react'
-import { setMaxListeners } from 'events'
+import PageContainer from '../components/ui/PageContainer.js'
 
-function IngredientList(row) {
-  return <div></div>
-}
 export default function GetRecipe() {
   const [name, setName] = useState('')
-  const [title, setIngr] = useState('')
-  const [ingr, setIngr] = useState('')
+  const [recipeInfo, setRecipeInfo] = useState([])
 
   const retrieveRecipe = function (e) {
     e.preventDefault()
-    console.log(name)
     fetch(`http://localhost:3001/getjoinedrecipes/?name=${name}`, {
       method: 'GET',
       headers: { 'Content-type': 'application/json' },
     })
       .then((resp) => resp.json())
       .then((json) => {
-        console.log(json)
-        let result = json.map((row, idx) => {
-          return <span key={idx}>{row.ingredient_name}</span>
-        })
-
-        setIngr(result)
+        let result = json
+        setRecipeInfo(result)
+        console.log(result)
       })
   }
 
@@ -51,8 +43,11 @@ export default function GetRecipe() {
           </div>
         </form>
       </div>
-
-      <div>{ingr}</div>
+      <div>
+        <PageContainer
+          recipeName={recipeInfo.length ? recipeInfo[0].recipe_name : ''}
+        ></PageContainer>
+      </div>
     </div>
   )
 }

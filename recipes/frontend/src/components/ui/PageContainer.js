@@ -1,10 +1,10 @@
 import './PageContainer.css'
 import RecipeContainer from './RecipeContainer'
 
-function PageContainer() {
+function PageContainer(props) {
   return (
     <div className="page-container">
-      <RecipeContainer></RecipeContainer>
+      <RecipeContainer recipeName={props.recipeName}></RecipeContainer>
     </div>
   )
 }
