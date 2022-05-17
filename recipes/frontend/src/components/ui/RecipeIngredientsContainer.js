@@ -3,11 +3,14 @@ import './RecipeIngredientsContainer.css'
 import IngredientsHeader from './IngredientsHeader'
 import IngredientsList from './IngredientsList'
 
-function RecipeIngredientsContainer() {
+function RecipeIngredientsContainer(props) {
+  console.log(props)
   return (
     <div className="recipe-ingredients-container">
       <IngredientsHeader></IngredientsHeader>
-      <IngredientsList></IngredientsList>
+      <IngredientsList
+        recipeIngredients={props.recipeIngredients}
+      ></IngredientsList>
     </div>
   )
 }

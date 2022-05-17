@@ -1,10 +1,11 @@
 import './RecipeMainContainer.css'
-import RecipeBlurbContainer from './RecipeBlurbContainer'
+import Information from './Information'
 
-function RecipeMainContainer() {
+function RecipeMainContainer(props) {
+  console.log(props)
   return (
     <div className="recipe-main-container">
-      <RecipeBlurbContainer></RecipeBlurbContainer>
+      <Information recipeIngredients={props.recipeIngredients}></Information>
     </div>
   )
 }

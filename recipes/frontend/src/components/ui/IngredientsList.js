@@ -1,12 +1,13 @@
 import './IngredientsList.css'
 
 import IngredientNameQuant from './IngredientNameQuant'
-function IngredientsList() {
+function IngredientsList(props) {
+  console.log(props)
   return (
     <div className="ingredients-list">
-      <IngredientNameQuant></IngredientNameQuant>
-      <IngredientNameQuant></IngredientNameQuant>
-      <IngredientNameQuant></IngredientNameQuant>
+      <IngredientNameQuant
+        recipeIngredients={props.recipeIngredients}
+      ></IngredientNameQuant>
     </div>
   )
 }
