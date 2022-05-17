@@ -5,9 +5,11 @@ import PageContainer from '../components/ui/PageContainer.js'
 export default function GetRecipe() {
   const [name, setName] = useState('')
   const [recipeInfo, setRecipeInfo] = useState([])
+  const [ingredients, setIngredients] = useState([])
 
   const retrieveRecipe = function (e) {
     e.preventDefault()
+    console.log(name)
     fetch(`http://localhost:3001/getjoinedrecipes/?name=${name}`, {
       method: 'GET',
       headers: { 'Content-type': 'application/json' },
@@ -15,8 +17,18 @@ export default function GetRecipe() {
       .then((resp) => resp.json())
       .then((json) => {
         let result = json
-        setRecipeInfo(result)
         console.log(result)
+        let ingredientList = []
+        for (let i = 0; i < result.length; i++) {
+          const ingObject = {
+            name: result[i].ingredient_name,
+            quantity: result[i].quantity,
+            measure: result[i].measure,
+          }
+          ingredientList.push(ingObject)
+        }
+        setRecipeInfo(result)
+        setIngredients(ingredientList)
       })
   }
 
@@ -46,6 +58,9 @@ export default function GetRecipe() {
       <div>
         <PageContainer
           recipeName={recipeInfo.length ? recipeInfo[0].recipe_name : ''}
+          recipeBlurb={recipeInfo.length ? recipeInfo[0].recipe_blurb : ''}
+          //insert method here
+          recipeIngredients={ingredients.length ? ingredients : ''}
         ></PageContainer>
       </div>
     </div>

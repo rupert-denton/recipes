@@ -1,10 +1,11 @@
 import './RecipeBlurbContainer.css'
-import Blurb from './Information'
+import Information from './Information'
 
-function RecipeBlurbContainer(ingr) {
+function RecipeBlurbContainer(props) {
+  console.log(props)
   return (
     <div className="recipe-blurb-container">
-      <Blurb>{ingr}</Blurb>
+      <Information></Information>
     </div>
   )
 }

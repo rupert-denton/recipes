@@ -3,10 +3,13 @@ import RecipeTitle from './RecipeTitle'
 import RecipeMainContainer from './RecipeMainContainer'
 
 function RecipeContainer(props) {
+  console.log(props.recipeIngredients)
   return (
     <div className="recipe-container">
       <RecipeTitle recipeName={props.recipeName}></RecipeTitle>
-      {/* <RecipeMainContainer></RecipeMainContainer> */}
+      <RecipeMainContainer
+        recipeIngredients={props.recipeIngredients}
+      ></RecipeMainContainer>
     </div>
   )
 }
