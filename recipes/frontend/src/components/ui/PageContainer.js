@@ -1,16 +1,16 @@
 import './PageContainer.css'
-import RecipeContainer from './RecipeContainer'
+import RecipeTitle from './RecipeTitle'
+import RecipeMainContainer from './RecipeMainContainer'
 
 function PageContainer(props) {
-  console.log(props)
   return (
     <div className="page-container">
-      <RecipeContainer
-        recipeName={props.recipeName}
+      <RecipeTitle recipeName={props.recipeName}></RecipeTitle>
+      <RecipeMainContainer
         recipeIngredients={
           props.recipeIngredients.length ? props.recipeIngredients : ''
         }
-      ></RecipeContainer>
+      ></RecipeMainContainer>
     </div>
   )
 }

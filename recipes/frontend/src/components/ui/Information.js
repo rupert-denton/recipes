@@ -5,7 +5,7 @@ import RecipeIngredientsMethod from './RecipeIngredientsMethod'
 
 function Information(props) {
   return (
-    <div className="blurb">
+    <div className="information">
       <RecipeMeta></RecipeMeta>
       <RecipeIngredientsMethod
         recipeIngredients={props.recipeIngredients}

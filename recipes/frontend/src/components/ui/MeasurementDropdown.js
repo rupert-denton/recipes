@@ -2,7 +2,7 @@ import './MeasurementDropdown.css'
 
 export default function MeasurementDropdown() {
   return (
-    <select className="dropdown" name="cars" id="cars">
+    <select className="dropdown" name="measure" id="measure">
       <option value="cup">cup</option>
       <option value="tbsp">tbsp</option>
       <option value="tsp">tsp</option>
