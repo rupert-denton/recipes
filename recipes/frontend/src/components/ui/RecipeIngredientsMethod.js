@@ -5,6 +5,7 @@ import RecipeMethodContainer from './RecipeMethodContainer'
 
 function RecipeIngredientsMethod(props) {
   console.log(props)
+
   return (
     <div className="recipe-ingredients-method">
       <RecipeIngredientsContainer

@@ -4,7 +4,6 @@ import IngredientsHeader from './IngredientsHeader'
 import IngredientsList from './IngredientsList'
 
 function RecipeIngredientsContainer(props) {
-  console.log(props)
   return (
     <div className="recipe-ingredients-container">
       <IngredientsHeader></IngredientsHeader>

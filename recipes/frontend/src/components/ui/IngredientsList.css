@@ -1,4 +1,12 @@
 .ingredient-list {
   display: grid;
-  grid-template-columns: 1fr 2.5fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.ingredient-element{
+}
+
+.ingredient-name {
+  margin-left: 0.3rem
+
 }

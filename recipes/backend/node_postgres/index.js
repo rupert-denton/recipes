@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
   console.log(req)
   console.log(res)
   pool
-    .query('SELECT * FROM recipe_table')
+    .query('SELECT * FROM recipes')
     .then((result) => {
       res.status(200).send(result.rows)
     })
@@ -49,10 +49,10 @@ app.post('/recipe', (req, res) => {
   console.log(req)
   console.log(res)
   pool
-    .query(
-      'insert into recipe_table(recipe_name, recipe_blurb) values($1, $2)',
-      [req.body.name, req.body.blurb]
-    )
+    .query('insert into recipes(recipe_name, recipe_method) values($1, $2)', [
+      req.body.name,
+      req.body.method,
+    ])
     .then((response) => {
       res.status(200).send(response)
     })
@@ -95,7 +95,7 @@ app.get('/getjoinedrecipes/', (req, res) => {
   //get recipe id from recipe name sent in fetch request
   pool
     .query(
-      `SELECT * FROM ingredientrecipes INNER JOIN recipe_table ON ingredientrecipes.recipe_id = recipe_table.id INNER JOIN ingredients ON ingredientrecipes.ingredient_id = ingredients.id where recipe_name=$1`,
+      `SELECT * FROM ingredientrecipes INNER JOIN recipes ON ingredientrecipes.recipe_id = recipes.id INNER JOIN ingredients ON ingredientrecipes.ingredient_id = ingredients.id where recipe_name=$1`,
       [req.query.name]
     )
     //return results to front end

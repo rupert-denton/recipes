@@ -9,7 +9,6 @@ export default function GetRecipe() {
 
   const retrieveRecipe = function (e) {
     e.preventDefault()
-    console.log(name)
     fetch(`http://localhost:3001/getjoinedrecipes/?name=${name}`, {
       method: 'GET',
       headers: { 'Content-type': 'application/json' },
@@ -18,15 +17,14 @@ export default function GetRecipe() {
       .then((json) => {
         let result = json
         console.log(result)
-        let ingredientList = []
-        for (let i = 0; i < result.length; i++) {
-          const ingObject = {
-            name: result[i].ingredient_name,
-            quantity: result[i].quantity,
-            measure: result[i].measure,
+        const ingredientList = result.map((item) => {
+          return {
+            name: item.ingredient_name,
+            quantity: item.quantity,
+            measure: item.measure,
           }
-          ingredientList.push(ingObject)
-        }
+        })
+
         setRecipeInfo(result)
         setIngredients(ingredientList)
       })
