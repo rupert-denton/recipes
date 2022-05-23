@@ -17,6 +17,7 @@ export default function Recipe() {
       quantity: ingredientyQty,
       measure: ingredientMeasure,
     }
+    console.log(recipeIngredient)
 
     setIngredientList((prev) => [...prev, recipeIngredient])
     console.log(ingredientList)
