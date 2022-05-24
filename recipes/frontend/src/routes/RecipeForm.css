@@ -34,7 +34,9 @@ button{
 .ingredient-triad{
   display: grid;
   grid-template-columns: 5fr 1fr 1fr;
-  margin-bottom: .5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 2rem;
+  border-bottom-style: dashed;
 }
 
 .quantity, .dropdown{
@@ -47,6 +49,11 @@ button{
 }
 .save-button-container{
   border-style: solid none none
+}
+
+.ingredient-method-frame{
+  display: grid;
+  grid-template-columns: 1fr 2fr;
 }
 
 

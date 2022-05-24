@@ -1,10 +1,10 @@
 import './Method.css'
 
 import MethodStep from './MethodStep'
-function Method() {
+function Method(props) {
   return (
     <div className="method">
-      <MethodStep></MethodStep>
+      <MethodStep recipeMethod={props.recipeMethod}></MethodStep>
     </div>
   )
 }
