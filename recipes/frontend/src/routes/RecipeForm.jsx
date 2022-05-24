@@ -1,10 +1,14 @@
 import './RecipeForm.css'
 import React, { useState } from 'react'
 
+import RecipeTitle from '../components/ui/RecipeTitle'
 import RecipeIngredientsContainer from '../components/ui/RecipeIngredientsContainer'
+import RecipeMethodContainer from '../components/ui/RecipeMethodContainer'
 
 export default function Recipe() {
   const [name, setName] = useState('')
+  const [method, setMethod] = useState('')
+
   const [ingredientList, setIngredientList] = useState([])
   const [ingredientObject, setIngredientObject] = useState({
     ingredient_name: '',
@@ -48,16 +52,13 @@ export default function Recipe() {
               type="text"
               rows="10"
               cols="33"
-              // onChange={(e) => setMethod(e.target.value)}
+              onChange={(e) => setMethod(e.target.value)}
             ></textarea>
           </div>
 
           {/* insert the ingredient list component here*/}
 
           <label>Recipe Ingredients</label>
-          <RecipeIngredientsContainer
-            recipeIngredients={ingredientList}
-          ></RecipeIngredientsContainer>
 
           <div className="ingredient-triad">
             <input
@@ -89,6 +90,14 @@ export default function Recipe() {
               <option value="cup">cup</option>
               <option value="tsp">tsp</option>
               <option value="tbsp">tbsp</option>
+              <option value="l">l</option>
+              <option value="ml">ml</option>
+              <option value="kg">kg</option>
+              <option value="g">g</option>
+              <option value="cm">cm</option>
+              <option value="mm">mm</option>
+              <option value="packet">packet</option>
+              <option value="handful">handful</option>
             </select>
             <button
               onClick={(e) => {
@@ -106,6 +115,15 @@ export default function Recipe() {
               Add
             </button>
           </div>
+          <RecipeTitle recipeName={name}></RecipeTitle>
+          <div className="ingredient-method-frame">
+            <RecipeIngredientsContainer
+              recipeIngredients={ingredientList}
+            ></RecipeIngredientsContainer>
+            <RecipeMethodContainer
+              recipeMethod={method}
+            ></RecipeMethodContainer>
+          </div>
         </form>
       </div>
     </div>
@@ -114,11 +132,6 @@ export default function Recipe() {
 
 ///
 
-// const [method, setMethod] = useState('')
-// const [ingredient, setIngredient] = useState('')
-// const [ingredientyQty, setIngredientQty] = useState('')
-// const [ingredientMeasure, setIngredientMeasure] = useState('')
-
 // const sendRecipeName = function (e) {
 //   e.preventDefault()
 //   const recipeIngredient = {
@@ -126,10 +139,6 @@ export default function Recipe() {
 //     quantity: ingredientyQty,
 //     measure: ingredientMeasure,
 //   }
-
-//   setIngredientList((prev) => [...prev, recipeIngredient])
-//   console.log(ingredientList)
-// }
 
 // fetch('http://localhost:3001/recipe', {
 //   method: 'POST',
@@ -142,17 +151,3 @@ export default function Recipe() {
 //    helpful thing autocomplete plugin
 // .then((resp) => resp.json())
 //   .then((json) => console.log(json))
-
-// <div className="save-button-container">
-//   <button className="save-recipe" onClick={(e) => sendRecipeName(e)}>
-//     Submit Recipe
-//   </button>
-// </div> */
-
-{
-  /* <div key={idx}>
-                <span>{ingredientObject.ingredient_name}</span>
-                <span>{ingredientObject.quantity}</span>
-                <span>{ingredientObject.measure}</span>
-              </div> */
-}

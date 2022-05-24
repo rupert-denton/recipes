@@ -1,12 +1,11 @@
 import './MethodStep.css'
 
-function MethodStep() {
+function MethodStep(props) {
+  console.log(props)
   return (
     <div>
-      <div className="method-step small-header">Step One</div>
-      <div className="method-text">
-        Bring a large pot of lightly salted water to a boil.
-      </div>
+      <div className="method-step small-header"></div>
+      <div className="method-text">{props.recipeMethod}</div>
     </div>
   )
 }
