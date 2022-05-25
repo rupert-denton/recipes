@@ -1,7 +1,6 @@
 import './MethodStep.css'
 
 function MethodStep(props) {
-  console.log(props)
   return (
     <div>
       <div className="method-step small-header"></div>

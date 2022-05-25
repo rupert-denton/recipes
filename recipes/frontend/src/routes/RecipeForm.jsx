@@ -7,7 +7,16 @@ import RecipeMethodContainer from '../components/ui/RecipeMethodContainer'
 
 export default function Recipe() {
   const [name, setName] = useState('')
-  const [method, setMethod] = useState('')
+
+  //create a handle function for method where prev = {...methodObject}
+  //wrap each step into an object
+  //push to methodStepArray
+
+  const [methodStepsList, setmMthodStepsList] = useState([])
+  const [methodStepObject, setMethodStepObject] = useState({
+    step_number: '',
+    step_instructions: '',
+  })
 
   const [ingredientList, setIngredientList] = useState([])
   const [ingredientObject, setIngredientObject] = useState({
@@ -19,16 +28,18 @@ export default function Recipe() {
   const handleChange = (e) => {
     let key = e.target.name
     let value = e.target.value
-    console.log(key, value)
-    // const { name, value } = e.target //this is an interesting way of declaring two variables inside curlies its called destructuring i believe, changed so i could understand
     let prev = { ...ingredientObject }
     prev[key] = value
     setIngredientObject(prev)
-    //setIngredientList((prevState) => {
-    //  const newIngredientList = [...prevState]
-    //  newIngredientList[idx][key] = value
-    //  return [...newIngredientList]
-    //})
+  }
+
+  const handleMethodChange = (e) => {
+    let key = e.target.name
+    let value = e.target.value
+    let prev = { ...methodStepObject }
+    prev[key] = value
+    setMethodStepObject(prev)
+    console.log(methodStepObject)
   }
 
   return (
@@ -46,20 +57,36 @@ export default function Recipe() {
               onChange={(e) => setName(e.target.value)}
             ></input>
           </div>
+
           <div className="recipe-blurb recipe-element">
             <label>Recipe Method</label>
-            <textarea
-              type="text"
-              rows="10"
-              cols="33"
-              onChange={(e) => setMethod(e.target.value)}
-            ></textarea>
+            <span className="method-span">
+              <textarea
+                type="text"
+                rows="5"
+                placeholder="Step..."
+                onChange={(e) => handleMethodChange(e)}
+              ></textarea>
+
+              <button
+                onClick={(e) => {
+                  setIngredientList((prev) => [
+                    ...prev,
+                    {
+                      measure: ingredientObject.measure,
+                      quantity: ingredientObject.quantity,
+                      ingredient_name: ingredientObject.ingredient_name,
+                    },
+                  ])
+                  e.preventDefault()
+                }}
+              >
+                Add Step
+              </button>
+            </span>
           </div>
 
-          {/* insert the ingredient list component here*/}
-
           <label>Recipe Ingredients</label>
-
           <div className="ingredient-triad">
             <input
               className="ingredient"
@@ -112,7 +139,7 @@ export default function Recipe() {
                 e.preventDefault()
               }}
             >
-              Add
+              Add Ingredient
             </button>
           </div>
           <RecipeTitle recipeName={name}></RecipeTitle>
@@ -121,7 +148,7 @@ export default function Recipe() {
               recipeIngredients={ingredientList}
             ></RecipeIngredientsContainer>
             <RecipeMethodContainer
-              recipeMethod={method}
+            // recipeMethod={method}
             ></RecipeMethodContainer>
           </div>
         </form>
