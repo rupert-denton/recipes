@@ -15,7 +15,6 @@ function mapIngredients() {
 }
 
 function IngredientsList(props) {
-  console.log(props)
   ingredientArray = props.recipeIngredients || []
   return <div className="ingredient-list">{mapIngredients()}</div>
 }
