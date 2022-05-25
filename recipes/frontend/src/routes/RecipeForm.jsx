@@ -12,7 +12,7 @@ export default function Recipe() {
   //wrap each step into an object
   //push to methodStepArray
 
-  const [methodStepsList, setmMthodStepsList] = useState([])
+  const [methodStepsList, setMethodStepsList] = useState([])
   const [methodStepObject, setMethodStepObject] = useState({
     step_number: '',
     step_instructions: '',
@@ -36,10 +36,10 @@ export default function Recipe() {
   const handleMethodChange = (e) => {
     let key = e.target.name
     let value = e.target.value
+    console.log(`${key}:${value}`)
     let prev = { ...methodStepObject }
     prev[key] = value
     setMethodStepObject(prev)
-    console.log(methodStepObject)
   }
 
   return (
@@ -49,6 +49,8 @@ export default function Recipe() {
           <div className="page-header">
             <h1>New Recipe</h1>
           </div>
+
+          {/* recipe name logic */}
           <div className="recipe-title recipe-element">
             <label>Recipe Name</label>
             <input
@@ -58,24 +60,25 @@ export default function Recipe() {
             ></input>
           </div>
 
+          {/* recipe method logic */}
           <div className="recipe-blurb recipe-element">
             <label>Recipe Method</label>
+
             <span className="method-span">
               <textarea
-                type="text"
                 rows="5"
+                name="step_instructions"
+                type="text"
                 placeholder="Step..."
                 onChange={(e) => handleMethodChange(e)}
               ></textarea>
 
               <button
                 onClick={(e) => {
-                  setIngredientList((prev) => [
-                    ...prev,
+                  setMethodStepsList((oldMethodList) => [
+                    ...oldMethodList,
                     {
-                      measure: ingredientObject.measure,
-                      quantity: ingredientObject.quantity,
-                      ingredient_name: ingredientObject.ingredient_name,
+                      step_instructions: methodStepObject.step_instructions,
                     },
                   ])
                   e.preventDefault()
@@ -86,6 +89,7 @@ export default function Recipe() {
             </span>
           </div>
 
+          {/* recipe ingredient logic */}
           <label>Recipe Ingredients</label>
           <div className="ingredient-triad">
             <input
@@ -128,8 +132,8 @@ export default function Recipe() {
             </select>
             <button
               onClick={(e) => {
-                setIngredientList((prev) => [
-                  ...prev,
+                setIngredientList((oldIngredientList) => [
+                  ...oldIngredientList,
                   {
                     measure: ingredientObject.measure,
                     quantity: ingredientObject.quantity,
@@ -142,13 +146,15 @@ export default function Recipe() {
               Add Ingredient
             </button>
           </div>
+
+          {/* recipe preview logic */}
           <RecipeTitle recipeName={name}></RecipeTitle>
           <div className="ingredient-method-frame">
             <RecipeIngredientsContainer
               recipeIngredients={ingredientList}
             ></RecipeIngredientsContainer>
             <RecipeMethodContainer
-            // recipeMethod={method}
+              recipeMethod={methodStepsList}
             ></RecipeMethodContainer>
           </div>
         </form>

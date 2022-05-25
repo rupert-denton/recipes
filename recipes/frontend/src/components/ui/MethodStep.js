@@ -1,12 +1,19 @@
 import './MethodStep.css'
+import React from 'react'
+
+let methodArray
+function mapMethod() {
+  return methodArray.map((item, idx) => (
+    <React.Fragment key={idx}>
+      <div className="method-step small-header">Step {idx + 1}</div>
+      <div className="method-text">{item.step_instructions}</div>
+    </React.Fragment>
+  ))
+}
 
 function MethodStep(props) {
-  return (
-    <div>
-      <div className="method-step small-header"></div>
-      <div className="method-text">{props.recipeMethod}</div>
-    </div>
-  )
+  methodArray = props.recipeMethod || []
+  return <div className="recipe-method-container">{mapMethod()}</div>
 }
 
 export default MethodStep
