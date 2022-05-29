@@ -7,17 +7,8 @@ import RecipeMethodContainer from '../components/ui/RecipeMethodContainer'
 
 export default function Recipe() {
   const [name, setName] = useState('')
-
-  //create a handle function for method where prev = {...methodObject}
-  //wrap each step into an object
-  //push to methodStepArray
-
   const [methodStepsList, setMethodStepsList] = useState([])
-  const [methodStepObject, setMethodStepObject] = useState({
-    step_number: '',
-    step_instructions: '',
-  })
-
+  const [methodStepObject, setMethodStepObject] = useState([])
   const [ingredientList, setIngredientList] = useState([])
   const [ingredientObject, setIngredientObject] = useState({
     ingredient_name: '',
@@ -33,13 +24,12 @@ export default function Recipe() {
     setIngredientObject(prev)
   }
 
+   //onClick "addMethod" split into array on /n
+  //push to objects
+  //push to list
   const handleMethodChange = (e) => {
-    let key = e.target.name
-    let value = e.target.value
-    console.log(`${key}:${value}`)
-    let prev = { ...methodStepObject }
-    prev[key] = value
-    setMethodStepObject(prev)
+    let method = e.target.value
+    setMethodStepObject(method.split(/\r?\n/))
   }
 
   return (
@@ -63,28 +53,29 @@ export default function Recipe() {
           {/* recipe method logic */}
           <div className="recipe-blurb recipe-element">
             <label>Recipe Method</label>
-
             <span className="method-span">
               <textarea
                 rows="5"
                 name="step_instructions"
                 type="text"
-                placeholder="Step..."
+                placeholder="Method will be split up based on new lines"
                 onChange={(e) => handleMethodChange(e)}
               ></textarea>
-
               <button
                 onClick={(e) => {
+                  console.log(methodStepObject)
+                  for (const step of methodStepObject){
                   setMethodStepsList((oldMethodList) => [
                     ...oldMethodList,
-                    {
-                      step_instructions: methodStepObject.step_instructions,
-                    },
+                      {
+                      step_instruction: step
+                    }
                   ])
+                }
                   e.preventDefault()
                 }}
               >
-                Add Step
+                Add Method
               </button>
             </span>
           </div>
@@ -129,6 +120,12 @@ export default function Recipe() {
               <option value="mm">mm</option>
               <option value="packet">packet</option>
               <option value="handful">handful</option>
+              <option value="clove">clove</option>
+              <option value="cloves">cloves</option>
+              <option value="slice">slice</option>
+              <option value="slices">slices</option>
+              <option value="pinch">pinch</option>
+              <option value="pinches">pinches</option>
             </select>
             <button
               onClick={(e) => {
