@@ -32,6 +32,26 @@ export default function Recipe() {
     setMethodStepObject(method.split(/\r?\n/))
   }
 
+  const postRecipe = (e) => {
+    e.preventDefault()
+    fetch('http://localhost:3001/recipe', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify({
+        name: name,
+        method: methodStepsList,
+        ingredients: ingredientList,
+      }),
+    })
+      .then((resp) => resp.json())
+      .then((json) => console.log(json))
+  }
+
+  //JSON.stringify(ingredientList) then at serverside iterate through the list and post them one by one
+  //run an forEach loop at serverdside running
+  // insert the name and method into the recipe table and get the ID from the (last insert id)
+  //and then use that id as a fk to help to insert the ingredients into the
+
   return (
     <div>
       <div className="recipe-form-container">
@@ -145,6 +165,7 @@ export default function Recipe() {
           </div>
 
           {/* recipe preview logic */}
+
           <RecipeTitle recipeName={name}></RecipeTitle>
           <div className="ingredient-method-frame">
             <RecipeIngredientsContainer
@@ -154,6 +175,13 @@ export default function Recipe() {
               recipeMethod={methodStepsList}
             ></RecipeMethodContainer>
           </div>
+          <button
+            onClick={(e) => {
+              postRecipe(e)
+            }}
+          >
+            Submit Recipe
+          </button>
         </form>
       </div>
     </div>
