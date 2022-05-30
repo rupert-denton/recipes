@@ -9,7 +9,7 @@ export default function GetRecipe() {
 
   const retrieveRecipe = function (e) {
     e.preventDefault()
-    fetch(`http://localhost:3001/getjoinedrecipes/?name=${name}`, {
+    fetch(`http://localhost:3001/getbasicrecipe/?name=${name}`, {
       method: 'GET',
       headers: { 'Content-type': 'application/json' },
     })
@@ -17,16 +17,16 @@ export default function GetRecipe() {
       .then((json) => {
         let result = json
         console.log(result)
-        const ingredientList = result.map((item) => {
-          return {
-            name: item.ingredient_name,
-            quantity: item.quantity,
-            measure: item.measure,
-          }
-        })
+        // const ingredientList = result.map((item) => {
+        //   return {
+        //     name: item.ingredient_name,
+        //     quantity: item.quantity,
+        //     measure: item.measure,
+        //   }
+        // })
 
-        setRecipeInfo(result)
-        setIngredients(ingredientList)
+        // setRecipeInfo(result)
+        // setIngredients(ingredientList)
       })
   }
 
