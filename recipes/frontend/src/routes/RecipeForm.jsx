@@ -24,7 +24,7 @@ export default function Recipe() {
     setIngredientObject(prev)
   }
 
-   //onClick "addMethod" split into array on /n
+  //onClick "addMethod" split into array on /n
   //push to objects
   //push to list
   const handleMethodChange = (e) => {
@@ -64,14 +64,14 @@ export default function Recipe() {
               <button
                 onClick={(e) => {
                   console.log(methodStepObject)
-                  for (const step of methodStepObject){
-                  setMethodStepsList((oldMethodList) => [
-                    ...oldMethodList,
+                  for (const step of methodStepObject) {
+                    setMethodStepsList((oldMethodList) => [
+                      ...oldMethodList,
                       {
-                      step_instruction: step
-                    }
-                  ])
-                }
+                        step_instruction: step,
+                      },
+                    ])
+                  }
                   e.preventDefault()
                 }}
               >
