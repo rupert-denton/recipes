@@ -1,10 +1,9 @@
 import './RecipeTitle.css'
-import RecipeName from './RecipeName'
 
 function RecipeTitle(props) {
   return (
     <div className="recipe-title">
-      <RecipeName recipeName={props.recipeName}></RecipeName>
+      <h1 className="recipe-name">{props.recipeName}</h1>
     </div>
   )
 }
