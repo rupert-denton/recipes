@@ -12,15 +12,10 @@ const pool = new Pool({
   port: 5432,
 })
 
-//is this correctly set up?
-//const recipe_model = require('./recipe_model')
-
 app.use(express.json())
 app.use(bodyParser.json())
 
 app.use(function (req, res, next) {
-  //what are these?
-
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
   res.setHeader(
@@ -31,9 +26,10 @@ app.use(function (req, res, next) {
 })
 
 //ingredient crud
+
+//read
 app.get('/', (req, res) => {
-  console.log(req)
-  console.log(res)
+  console.log(req.body)
   pool
     .query('SELECT * FROM recipes')
     .then((result) => {
@@ -45,25 +41,39 @@ app.get('/', (req, res) => {
     })
 })
 
-app.post('/recipe', (req, res) => {
-  console.log(req)
-  console.log(res)
+app.get('/getbasicrecipe', (req, res) => {
+  // console.log(req.query)
+  let recipeName = req.query
   pool
-    .query('insert into recipes(recipe_name, recipe_method) values($1, $2)', [
-      req.body.name,
-      req.body.method,
-    ])
-    .then((response) => {
-      res.status(200).send(response)
+    .query('SELECT * FROM recipes WHERE recipe_name=$1', [recipeName])
+    .then((result) => {
+      console.log(result)
+      res.status(200).send(result.rows)
     })
     .catch((error) => {
+      console.log(error)
       res.status(500).send(error)
     })
-})
+}) /
+  app.get('/getjoinedrecipes/', (req, res) => {
+    console.log(req.query.name)
+    //get recipe id from recipe name sent in fetch request
+    pool
+      .query(
+        `SELECT * FROM ingredientrecipes INNER JOIN recipes ON ingredientrecipes.recipe_id = recipes.id INNER JOIN ingredients ON ingredientrecipes.ingredient_id = ingredients.id where recipe_name=$1`,
+        [req.query.name]
+      )
+      //return results to front end
+      .then((result) => {
+        console.log(result.rows)
+        res.send(result.rows)
+      })
+      .catch((error) => {
+        console.log(error)
+        res.status(500).send(error)
+      })
+  })
 
-//ingredient crud
-
-//read
 app.get('/getingredients', (req, res) => {
   pool
     .query('SELECT * FROM ingredients')
@@ -90,21 +100,19 @@ app.post('/ingredient', (req, res) => {
     })
 })
 
-app.get('/getjoinedrecipes/', (req, res) => {
-  console.log(req)
-  //get recipe id from recipe name sent in fetch request
+app.post('/recipe', (req, res) => {
+  console.log(req.body.name)
+  console.log(req.body.method)
+  console.log(req.body.ingredients)
   pool
-    .query(
-      `SELECT * FROM ingredientrecipes INNER JOIN recipes ON ingredientrecipes.recipe_id = recipes.id INNER JOIN ingredients ON ingredientrecipes.ingredient_id = ingredients.id where recipe_name=$1`,
-      [req.query.name]
-    )
-    //return results to front end
-    .then((result) => {
-      //console.log(result.rows)
-      res.send(result.rows)
+    .query('insert into recipes(recipe_name, recipe_method) values($1, $2)', [
+      req.body.name,
+      req.body.method,
+    ])
+    .then((response) => {
+      res.status(200).send(response)
     })
     .catch((error) => {
-      console.log(error)
       res.status(500).send(error)
     })
 })
