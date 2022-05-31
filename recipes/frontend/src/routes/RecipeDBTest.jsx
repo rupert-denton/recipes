@@ -1,32 +1,31 @@
 import './RecipeForm.css'
 import React, { useState } from 'react'
-import PageContainer from '../components/ui/PageContainer.js'
+import RecipeTitle from '../components/ui/RecipeTitle.js'
+import RecipeIngredientsContainer from '../components/ui/RecipeIngredientsContainer'
+import RecipeMethodContainer from '../components/ui/RecipeMethodContainer'
 
 export default function GetRecipe() {
+  const [searchQuery, setSearchQuery] = useState('')
   const [name, setName] = useState('')
-  const [recipeInfo, setRecipeInfo] = useState([])
+  const [methodStepsList, setMethodStepsList] = useState([])
   const [ingredients, setIngredients] = useState([])
 
   const retrieveRecipe = function (e) {
     e.preventDefault()
-    fetch(`http://localhost:3001/getbasicrecipe/?name=${name}`, {
+    fetch(`http://localhost:3001/getbasicrecipe/?name=${searchQuery}`, {
       method: 'GET',
       headers: { 'Content-type': 'application/json' },
     })
       .then((resp) => resp.json())
       .then((json) => {
+        console.log(json)
         let result = json
-        console.log(result)
-        // const ingredientList = result.map((item) => {
-        //   return {
-        //     name: item.ingredient_name,
-        //     quantity: item.quantity,
-        //     measure: item.measure,
-        //   }
-        // })
-
-        // setRecipeInfo(result)
-        // setIngredients(ingredientList)
+        let recipeName = result[0].recipe_name
+        let recipeMethod = result[0].recipe_method.split(/\r?\n/)
+        console.log(recipeMethod)
+        setName(recipeName)
+        setMethodStepsList(recipeMethod)
+        setIngredients(json)
       })
   }
 
@@ -41,8 +40,8 @@ export default function GetRecipe() {
             <label>Recipe Name</label>
             <input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)} //event here is onChange this sets the value of e, presumably the target is the <input>
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)} //event here is onChange this sets the value of e, presumably the target is the <input>
             ></input>
           </div>
 
@@ -54,12 +53,15 @@ export default function GetRecipe() {
         </form>
       </div>
       <div>
-        <PageContainer
-          recipeName={recipeInfo.length ? recipeInfo[0].recipe_name : ''}
-          recipeBlurb={recipeInfo.length ? recipeInfo[0].recipe_blurb : ''}
-          //insert method here
-          recipeIngredients={ingredients.length ? ingredients : ''}
-        ></PageContainer>
+        <RecipeTitle recipeName={name}></RecipeTitle>
+        <div className="ingredient-method-frame">
+          <RecipeIngredientsContainer
+            recipeIngredients={ingredients}
+          ></RecipeIngredientsContainer>
+          <RecipeMethodContainer
+            recipeMethod={methodStepsList}
+          ></RecipeMethodContainer>
+        </div>
       </div>
     </div>
   )

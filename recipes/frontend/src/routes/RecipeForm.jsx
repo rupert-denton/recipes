@@ -7,7 +7,7 @@ import RecipeMethodContainer from '../components/ui/RecipeMethodContainer'
 
 export default function Recipe() {
   const [name, setName] = useState('')
-  const [methodStepsList, setMethodStepsList] = useState([])
+  const [methodStepsList, setMethodStepsList] = useState('')
   const [methodStepObject, setMethodStepObject] = useState([])
   const [ingredientList, setIngredientList] = useState([])
   const [ingredientObject, setIngredientObject] = useState({
@@ -24,12 +24,9 @@ export default function Recipe() {
     setIngredientObject(prev)
   }
 
-  //onClick "addMethod" split into array on /n
-  //push to objects
-  //push to list
   const handleMethodChange = (e) => {
     let method = e.target.value
-    setMethodStepObject(method.split(/\r?\n/))
+    setMethodStepObject(method)
   }
 
   const postRecipe = (e) => {
@@ -84,14 +81,7 @@ export default function Recipe() {
               <button
                 onClick={(e) => {
                   console.log(methodStepObject)
-                  for (const step of methodStepObject) {
-                    setMethodStepsList((oldMethodList) => [
-                      ...oldMethodList,
-                      {
-                        step_instruction: step,
-                      },
-                    ])
-                  }
+                  setMethodStepsList(methodStepObject)
                   e.preventDefault()
                 }}
               >
@@ -172,7 +162,9 @@ export default function Recipe() {
               recipeIngredients={ingredientList}
             ></RecipeIngredientsContainer>
             <RecipeMethodContainer
-              recipeMethod={methodStepsList}
+              recipeMethod={
+                methodStepsList ? methodStepsList.split(/\r?\n/) : []
+              }
             ></RecipeMethodContainer>
           </div>
           <button
