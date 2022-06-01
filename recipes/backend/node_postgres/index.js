@@ -15,6 +15,7 @@ const pool = new Pool({
 
 app.use(express.json())
 app.use(bodyParser.json())
+app.use(express.static('frontend/src/views'))
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
@@ -30,7 +31,6 @@ app.use(function (req, res, next) {
 
 //read
 app.get('/', (req, res) => {
-  console.log(req.body)
   pool
     .query('SELECT * FROM recipes')
     .then((result) => {
@@ -43,6 +43,8 @@ app.get('/', (req, res) => {
 })
 
 app.get('/getbasicrecipe', (req, res) => {
+  console.log(req)
+  console.log(req.query.name)
   let recipeName = req.query.name
   pool
     .query(
@@ -52,10 +54,9 @@ app.get('/getbasicrecipe', (req, res) => {
         ' inner join ingredients i on ' +
         ' i.id = ir.ingredient_id ' +
         ' where r.recipe_name = $1',
-      [recipeName.toLowerCase()]
+      [recipeName]
     )
     .then((result) => {
-      console.log(result.rows)
       res.status(200).send(result.rows)
     })
     .catch((error) => {
@@ -64,18 +65,22 @@ app.get('/getbasicrecipe', (req, res) => {
     })
 })
 
-app.get('/getjoinedrecipes/', (req, res) => {
+app.get('/recipes', (req, res) => {
+  console.log(req)
   console.log(req.query.name)
-  //get recipe id from recipe name sent in fetch request
+  let recipeName = req.query.name
   pool
     .query(
-      `SELECT * FROM ingredientrecipes INNER JOIN recipes ON ingredientrecipes.recipe_id = recipes.id INNER JOIN ingredients ON ingredientrecipes.ingredient_id = ingredients.id where recipe_name=$1`,
-      [req.query.name]
+      'select r.recipe_name, r.recipe_method, ir.*, i.ingredient_name from recipes r ' +
+        ' inner join ingredientrecipes ir ' +
+        ' on r.id = ir.recipe_id    ' +
+        ' inner join ingredients i on ' +
+        ' i.id = ir.ingredient_id ' +
+        ' where r.recipe_name = $1',
+      [recipeName]
     )
-    //return results to front end
     .then((result) => {
-      console.log(result.rows)
-      res.send(result.rows)
+      res.status(200).send(result.rows)
     })
     .catch((error) => {
       console.log(error)
@@ -114,9 +119,6 @@ app.post('/ingredient', (req, res) => {
 //connect the schemas
 
 app.post('/recipe', (req, res) => {
-  console.log(req.body.name)
-  console.log(req.body.method)
-  console.log(req.body.ingredients)
   pool
     .query(
       'insert into recipes(recipe_name, recipe_method) values($1, $2) RETURNING id',
@@ -129,7 +131,7 @@ app.post('/recipe', (req, res) => {
           .query(
             'WITH ins as (INSERT INTO ingredients(ingredient_name) values($1) ON CONFLICT DO NOTHING RETURNING id)' +
               'SELECT * FROM ins UNION select id from ingredients where ingredient_name = $1',
-            [req.body.ingredients[i].ingredient_name]
+            [req.body.ingredients[i].ingredient_name.toLowerCase()]
           )
           .then((result) => {
             //callback hell
