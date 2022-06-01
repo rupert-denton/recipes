@@ -136,6 +136,9 @@ export default function Recipe() {
               <option value="slices">slices</option>
               <option value="pinch">pinch</option>
               <option value="pinches">pinches</option>
+              <option value="head">head of</option>
+              <option value="heads">heads of</option>
+              <option value="whole">whole</option>
             </select>
             <button
               onClick={(e) => {
