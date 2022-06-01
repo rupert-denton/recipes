@@ -44,11 +44,6 @@ export default function Recipe() {
       .then((json) => console.log(json))
   }
 
-  //JSON.stringify(ingredientList) then at serverside iterate through the list and post them one by one
-  //run an forEach loop at serverdside running
-  // insert the name and method into the recipe table and get the ID from the (last insert id)
-  //and then use that id as a fk to help to insert the ingredients into the
-
   return (
     <div>
       <div className="recipe-form-container">
