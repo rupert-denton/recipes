@@ -179,25 +179,3 @@ export default function Recipe() {
     </div>
   )
 }
-
-///
-
-// const sendRecipeName = function (e) {
-//   e.preventDefault()
-//   const recipeIngredient = {
-//     ingredient_name: ingredient,
-//     quantity: ingredientyQty,
-//     measure: ingredientMeasure,
-//   }
-
-// fetch('http://localhost:3001/recipe', {
-//   method: 'POST',
-//   headers: { 'Content-type': 'application/json' },
-//   body: JSON.stringify({ name: name, method: method }),
-// }) //JSON.stringify(ingredientList) then at serverside iterate through the list and post them one by one
-//    //run an forEach loop at serverdside running
-//    insert the name and method into the recipe table and get the ID from the (last insert id) and then use that
-//    id as a fk to help to insert the ingredients into the
-//    helpful thing autocomplete plugin
-// .then((resp) => resp.json())
-//   .then((json) => console.log(json))

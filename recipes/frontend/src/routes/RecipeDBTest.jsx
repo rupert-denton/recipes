@@ -50,18 +50,17 @@ export default function GetRecipe() {
               Get Recipe
             </button>
           </div>
+
+          <RecipeTitle recipeName={name}></RecipeTitle>
+          <div className="ingredient-method-frame">
+            <RecipeIngredientsContainer
+              recipeIngredients={ingredients}
+            ></RecipeIngredientsContainer>
+            <RecipeMethodContainer
+              recipeMethod={methodStepsList}
+            ></RecipeMethodContainer>
+          </div>
         </form>
-      </div>
-      <div>
-        <RecipeTitle recipeName={name}></RecipeTitle>
-        <div className="ingredient-method-frame">
-          <RecipeIngredientsContainer
-            recipeIngredients={ingredients}
-          ></RecipeIngredientsContainer>
-          <RecipeMethodContainer
-            recipeMethod={methodStepsList}
-          ></RecipeMethodContainer>
-        </div>
       </div>
     </div>
   )
