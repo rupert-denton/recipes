@@ -1,6 +1,8 @@
 import './RecipeList.css'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+// const db = require('../db.js')
+const library = require('../../../library')
 
 let recipeArray
 function mapRecipes() {
@@ -15,19 +17,24 @@ function mapRecipes() {
 
 export default function RecipeList() {
   const [recipeList, setRecipeList] = useState([])
+
   const retrieveAllRecipes = function () {
-    fetch(`http://localhost:3001/`, {
-      method: 'GET',
-      headers: { 'Content-type': 'application/json' },
+    library.getAllRecipes().then((resp) => {
+      console.log(resp)
     })
-      .then((resp) => resp.json())
-      .then((json) => {
-        let recipes = []
-        for (const item of json) {
-          recipes.push(item.recipe_name)
-        }
-        setRecipeList(recipes)
-      })
+
+    // fetch(`http://localhost:3001/`, {
+    //   method: 'GET',
+    //   headers: { 'Content-type': 'application/json' },
+    // })
+    //   .then((resp) => resp.json())
+    //   .then((json) => {
+    //     let recipes = []
+    //     for (const item of json) {
+    //       recipes.push(item.recipe_name)
+    //     }
+    //     setRecipeList(recipes)
+    //   })
   }
 
   retrieveAllRecipes()
