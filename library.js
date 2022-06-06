@@ -1,10 +1,10 @@
-const db = require('./db')
+const db = require('../db')
 
-function getRecipes() {
+function getAllRecipes() {
   return db
     .readRecipes()
     .then((result) => {
-      console.log(result)
+      return result
     })
     .catch((err) => {
       logError(err)
@@ -18,4 +18,6 @@ function logError(err) {
   console.error('Uh oh!', err.message)
 }
 
-getRecipes()
+module.exports = {
+  getAllRecipes,
+}
