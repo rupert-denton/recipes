@@ -6,6 +6,8 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
+    "knex": "^2.1.0",
+    "pg": "^8.7.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
@@ -15,7 +17,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest --watchAll",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -36,12 +38,13 @@
       "last 1 safari version"
     ]
   },
-
   "engines": {
     "node": "16.x"
-  }, 
-
+  },
   "build": {
     "build": "webpack"
+  },
+  "devDependencies": {
+    "jest": "^28.1.0"
   }
 }
