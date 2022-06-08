@@ -16,8 +16,6 @@ export default function RecipeList() {
       // setRecipes(data.map(recipe => recipe.recipe_name))
       .then((data) => {
         setRecipes(data)
-        console.log(data)
-        console.log(data)
       })
       .catch((err) => console.log(err))
   }, [])
