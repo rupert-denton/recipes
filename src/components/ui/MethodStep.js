@@ -15,7 +15,6 @@ function mapMethod() {
 function MethodStep(props) {
   console.log(props)
   methodArray = props.recipeMethod
-  // methodArray = array.length !== 0 ? array.split(/\r?\n/) : []
 
   return <div className="recipe-method-container">{mapMethod()}</div>
 }

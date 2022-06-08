@@ -1,43 +1,36 @@
 import './RecipeList.css'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-// const db = require('../db.js')
-const library = require('../../../library')
 
-let recipeArray
-function mapRecipes() {
-  return recipeArray.map((recipeName, idx) => (
+export default function RecipeList() {
+  // use state as a source of truth for the array of recipes
+  const [recipes, setRecipes] = useState([])
+
+  // use effect will fetch the data (BUT not every render,
+  // only once when the component FIRST renders)
+  // in simple terms: the empty array at the end tells useEffect to only run once
+  useEffect(() => {
+    fetch('/api/recipes')
+      .then((res) => res.json())
+      // set the state to the array of recipes, you could use .map here to only get recipe names
+      // setRecipes(data.map(recipe => recipe.recipe_name))
+      .then((data) => setRecipes(data))
+      .catch((err) => console.log(err))
+  }, [])
+
+  // pull it out into a variable like this or into another component
+  const recipeList = recipes.map((recipe, idx) => (
     <React.Fragment key={idx}>
       <div className="recipe">
-        <Link to={'recipe/' + recipeName}>{recipeName}</Link>
+        <Link to={'recipe/' + recipe.recipe_name}>{recipe.recipe_name}</Link>
       </div>
     </React.Fragment>
   ))
-}
 
-export default function RecipeList() {
-  const [recipeList, setRecipeList] = useState([])
-
-  const retrieveAllRecipes = function () {
-    library.getAllRecipes().then((resp) => {
-      console.log(resp)
-    })
-
-    // fetch(`http://localhost:3001/`, {
-    //   method: 'GET',
-    //   headers: { 'Content-type': 'application/json' },
-    // })
-    //   .then((resp) => resp.json())
-    //   .then((json) => {
-    //     let recipes = []
-    //     for (const item of json) {
-    //       recipes.push(item.recipe_name)
-    //     }
-    //     setRecipeList(recipes)
-    //   })
-  }
-
-  retrieveAllRecipes()
-  recipeArray = recipeList || []
-  return <div className="recipe-list">{mapRecipes()}</div>
+  return (
+    <div className="recipe-list">
+      <h1>Recipes</h1>
+      {recipeList}
+    </div>
+  )
 }
