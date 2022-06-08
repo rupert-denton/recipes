@@ -4,9 +4,8 @@ import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Recipe from './routes/Recipe'
 import RecipeForm from './routes/RecipeForm'
-import RecipeDBTest from './routes/RecipeDBTest'
+import RecipePage from './routes/RecipePage'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
@@ -14,7 +13,7 @@ root.render(
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/newrecipe" element={<RecipeForm />} />
-      <Route path="/recipe/:name" element={<RecipeDBTest />} />
+      <Route path="/recipe/:id" element={<RecipePage />} />
     </Routes>
   </BrowserRouter>
 )

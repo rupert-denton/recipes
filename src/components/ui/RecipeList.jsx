@@ -14,7 +14,11 @@ export default function RecipeList() {
       .then((res) => res.json())
       // set the state to the array of recipes, you could use .map here to only get recipe names
       // setRecipes(data.map(recipe => recipe.recipe_name))
-      .then((data) => setRecipes(data))
+      .then((data) => {
+        setRecipes(data)
+        console.log(data)
+        console.log(data)
+      })
       .catch((err) => console.log(err))
   }, [])
 
@@ -22,7 +26,7 @@ export default function RecipeList() {
   const recipeList = recipes.map((recipe, idx) => (
     <React.Fragment key={idx}>
       <div className="recipe">
-        <Link to={'recipe/' + recipe.recipe_name}>{recipe.recipe_name}</Link>
+        <Link to={'recipe/' + recipe.id}>{recipe.recipe_name}</Link>
       </div>
     </React.Fragment>
   ))
