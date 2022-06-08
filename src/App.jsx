@@ -8,7 +8,6 @@ import RecipeList from './components/ui/RecipeList'
 export default function App() {
   return (
     <div className="App">
-      <h1>Recipes</h1>
       <div>
         {/* <Link to="/testdb">Test Database</Link> */}
         <RecipeList />
