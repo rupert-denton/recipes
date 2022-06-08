@@ -4,9 +4,8 @@ const router = express.Router()
 
 // GET /api/recipes
 router.get('/', (req, res) => {
-  db.readRecipes()
+  db.getAllRecipes()
     .then((result) => {
-      console.log(`hello ${result}`)
       res.json(result)
     })
     .catch((err) => {
@@ -17,7 +16,15 @@ router.get('/', (req, res) => {
 //specific recipe dummy code
 // GET /api/recipes/{recipeId}
 router.get('/:id', (req, res) => {
-  //do stuff
+  let id = req.params.id
+  console.log(id)
+  db.getSpecificRecipe(id)
+    .then((result) => {
+      res.json(result)
+    })
+    .catch((err) => {
+      logError(err)
+    })
 })
 
 function logError(err) {
