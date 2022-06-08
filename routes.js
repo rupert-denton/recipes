@@ -17,7 +17,6 @@ router.get('/', (req, res) => {
 // GET /api/recipes/{recipeId}
 router.get('/:id', (req, res) => {
   let id = req.params.id
-  console.log(id)
   db.getSpecificRecipe(id)
     .then((result) => {
       res.json(result)
@@ -28,7 +27,7 @@ router.get('/:id', (req, res) => {
 })
 
 function logError(err) {
-  console.error('Uh oh!', err.message)
+  console.error(err.message)
 }
 
 module.exports = router
