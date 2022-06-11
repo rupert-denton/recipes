@@ -1,6 +1,7 @@
 const express = require('express')
 const db = require('./db')
 const router = express.Router()
+const util = require('./helpers')
 
 // GET /api/recipes
 router.get('/', (req, res) => {
@@ -9,12 +10,11 @@ router.get('/', (req, res) => {
       res.json(result)
     })
     .catch((err) => {
-      logError(err)
+      util.logError(err)
     })
 })
 
-//specific recipe dummy code
-// GET /api/recipes/{recipeId}
+// GET /api/recipes/{id}
 router.get('/:id', (req, res) => {
   let id = req.params.id
   db.getSpecificRecipe(id)
@@ -22,12 +22,24 @@ router.get('/:id', (req, res) => {
       res.json(result)
     })
     .catch((err) => {
-      logError(err)
+      util.logError(err)
     })
 })
 
-function logError(err) {
-  console.error(err.message)
-}
+// POST /api/recipes
+
+router.post('/add', (req, res) => {
+  const { name, method, ingredients } = req.body
+  const newRecipe = { name, method, ingredients }
+
+  db.addNewRecipe(newRecipe)
+    .then((result) => {
+      console.log(`line 37 routes.js: ${result}`)
+      res.redirect(`/`)
+    })
+    .catch((err) => {
+      util.logError(err)
+    })
+})
 
 module.exports = router
