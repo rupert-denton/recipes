@@ -31,7 +31,7 @@ export default function Recipe() {
 
   const postRecipe = (e) => {
     e.preventDefault()
-    fetch('http://localhost:3001/recipe', {
+    fetch('/api/recipes/add', {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
