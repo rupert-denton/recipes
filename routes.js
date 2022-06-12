@@ -19,6 +19,7 @@ router.get('/:id', (req, res) => {
   let id = req.params.id
   db.getSpecificRecipe(id)
     .then((result) => {
+      console.log(result)
       res.json(result)
     })
     .catch((err) => {
