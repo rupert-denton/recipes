@@ -21,27 +21,22 @@ function getSpecificRecipe(id, db = connection) {
 //   //look into promise.all
 
 function addNewIngr(ingredientData, db = connection) {
-  console.log(
-    `line 24: creating new entries in ingredient table for ${ingredientData}`
-  )
   const ingredient_name = { ingredient_name: ingredientData }
   return db('ingredients')
     .insert(ingredient_name)
     .returning('id')
     .then((result) => {
-      return result[0].id
+      return { ingredient_id: result[0].id, ingredient_name: ingredientData }
     })
 }
 
 async function getIngredients(ingredientsArray, db = connection) {
-  //deleted recipe id
-  console.log(ingredientsArray)
-  let ingredientIds = []
+  let ingredientObjects = []
   for (let i = 0; i < ingredientsArray.length; i++) {
     const id = await findOrCreateIngredientId(ingredientsArray[i]) // rather than all at the same time - in parallel - i guess im confused because i thought a loop does things sequentially
-    ingredientIds.push(id)
+    ingredientObjects.push(id)
   }
-  return ingredientIds
+  return ingredientObjects
 }
 
 // this will create if doesn't exist (returning id), or return the id
@@ -54,7 +49,10 @@ function findOrCreateIngredientId(ingredient, db = connection) {
     .then((result) => {
       return result === undefined
         ? addNewIngr(ingredient.ingredient_name)
-        : ingredient.id
+        : {
+            ingredient_id: result.id,
+            ingredient_name: ingredient.ingredient_name,
+          }
     })
 }
 
@@ -67,22 +65,30 @@ async function addNewRecipe(newRecipe, db = connection) {
   }
   const ingredientsArray = newRecipe.ingredients
 
-  console.log(ingredientsArray)
-
   const [{ id: recipeId }] = await db('recipes')
     .insert(recipeDetails)
     .returning('id')
+  const ingredientsNameAndIds = await getIngredients(ingredientsArray) //returns an array of ids
 
-  console.log(`The recipe's id is: ${recipeId}`)
+  ingredientsNameAndIds.forEach((ingredient) => {
+    const recipeIngredient = ingredientsArray.find(
+      (ri) => ri.ingredient_name === ingredient.ingredient_name
+    )
+    const ingredientRecipeObj = {
+      recipe_id: recipeId,
+      ingredient_id: ingredient.ingredient_id,
+      measure: recipeIngredient.measure,
+      quantity: recipeIngredient.quantity,
+    }
+    console.log(ingredientRecipeObj)
 
-  const ingredientsWithIds = await getIngredients(ingredientsArray) //remobed recipe id param
-  console.log(`The id of inserted ingredient(s) is/are: ${ingredientsWithIds}`)
-
-  console.log(
-    `The id of the newly created recipe is: ${recipeId}, the relevant ingredient ids are: ${ingredientsWithIds}`
-  )
-  //need to get existing ingredientId from the getIngredient function
-  //Need to then wrap everything up and insert into db
+    return db('ingredientrecipes')
+      .insert(ingredientRecipeObj)
+      .returning('id')
+      .then((result) => {
+        return result[0].id
+      })
+  })
 }
 
 module.exports = {
