@@ -4,7 +4,6 @@ import MethodHeader from './MethodHeader'
 import Method from './Method'
 
 function RecipeMethodContainer(props) {
-  console.log(props)
   return (
     <div className="recipe-method-container">
       <MethodHeader></MethodHeader>

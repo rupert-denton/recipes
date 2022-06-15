@@ -91,8 +91,20 @@ async function addNewRecipe(newRecipe, db = connection) {
   })
 }
 
+function deleteRecipe(id, db = connection) {
+  console.log(id)
+
+  return db('ingredientrecipes')
+    .delete()
+    .where(`recipe_id`, id)
+    .then(() => {
+      return db('recipes').delete().where({ id })
+    })
+}
+
 module.exports = {
   getAllRecipes,
   getSpecificRecipe,
   addNewRecipe,
+  deleteRecipe,
 }

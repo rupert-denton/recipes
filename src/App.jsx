@@ -1,5 +1,4 @@
 import './App.css'
-import { Link } from 'react-router-dom'
 import RecipeList from './components/ui/RecipeList'
 
 // import PageContainer from './components/RecipePage/PageContainer'
@@ -9,9 +8,7 @@ export default function App() {
   return (
     <div className="App">
       <div>
-        {/* <Link to="/testdb">Test Database</Link> */}
         <RecipeList />
-        <Link to="/newrecipe">New Recipe</Link>
       </div>
     </div>
   )
