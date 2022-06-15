@@ -28,7 +28,6 @@ router.get('/:id', (req, res) => {
 })
 
 // POST /api/recipes
-
 router.post('/add', (req, res) => {
   const { name, method, ingredients } = req.body
   const newRecipe = { name, method, ingredients }
@@ -40,6 +39,20 @@ router.post('/add', (req, res) => {
     })
     .catch((err) => {
       util.logError(err)
+    })
+})
+
+// DELETE /api/delete/:id
+router.post('/delete', (req, res) => {
+  const id = Number(req.body.id)
+
+  db.deleteRecipe(id)
+    .then((result) => {
+      res.redirect('/')
+    })
+    .catch((err) => {
+      console.error(err)
+      res.status(500).send('Server Error')
     })
 })
 

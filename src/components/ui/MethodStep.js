@@ -3,7 +3,6 @@ import React from 'react'
 
 let methodArray
 function mapMethod() {
-  console.log(methodArray)
   return methodArray.map((item, idx) => (
     <React.Fragment key={idx}>
       <div className="method-step small-header">Step {idx + 1}</div>
@@ -13,7 +12,6 @@ function mapMethod() {
 }
 
 function MethodStep(props) {
-  console.log(props)
   methodArray = props.recipeMethod
 
   return <div className="recipe-method-container">{mapMethod()}</div>
