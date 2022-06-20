@@ -9,6 +9,8 @@ import RecipePage from './routes/RecipePage'
 import AdminDashboard from './routes/AdminDashboard'
 import EditRecipe from './routes/EditRecipe'
 import EditRecipePage from './routes/EditRecipePage'
+import CreateRecipeFormWrapper from './routes/CreateRecipeFormWrapper'
+import EditRecipeFormWrapper from './routes/EditRecipeFormWrapper'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
@@ -17,9 +19,9 @@ root.render(
       <Route path="/" element={<App />} />
       <Route path="recipe/:id" element={<RecipePage />} />
       <Route path="admin" element={<AdminDashboard />} />
-      <Route path="admin/newrecipe" element={<RecipeForm />} />
+      <Route path="admin/newrecipe" element={<CreateRecipeFormWrapper />} />
       <Route path="admin/editrecipes" element={<EditRecipe />} />
-      <Route path="edit/:id" element={<EditRecipePage />} />
+      <Route path="edit/:id" element={<EditRecipeFormWrapper />} />
     </Routes>
   </Router>
 )

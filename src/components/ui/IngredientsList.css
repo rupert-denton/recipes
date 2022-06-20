@@ -1,6 +1,12 @@
+.ingredient-grouping{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: .5rem;
+}
+
 .ingredient-list {
-  display: grid;
-  grid-template-columns:.015fr .04fr 1fr;
+  /* display: grid;
+  grid-template-columns:.015fr .04fr 1fr; */
 }
 
 .ingredient-element{

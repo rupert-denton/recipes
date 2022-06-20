@@ -9,6 +9,7 @@ function RecipeIngredientsContainer(props) {
       <IngredientsHeader></IngredientsHeader>
       <IngredientsList
         recipeIngredients={props.recipeIngredients}
+        onRemoveIngredient={props.onRemoveIngredient}
       ></IngredientsList>
     </div>
   )
