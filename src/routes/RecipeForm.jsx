@@ -1,11 +1,12 @@
 import './RecipeForm.css'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import RecipeTitle from '../components/ui/RecipeTitle'
 import RecipeIngredientsContainer from '../components/ui/RecipeIngredientsContainer'
 import RecipeMethodContainer from '../components/ui/RecipeMethodContainer'
 
-export default function Recipe() {
+export default function Recipe(props) {
+  console.log(props)
   const [name, setName] = useState('')
   const [methodStepsList, setMethodStepsList] = useState('')
   const [methodStepObject, setMethodStepObject] = useState([])
@@ -16,6 +17,16 @@ export default function Recipe() {
     measure: '',
   })
 
+  const formLabel = props.data ? 'Update Recipe' : 'New Recipe'
+  let buttonLabel = props.data ? 'Update Recipe' : 'Add Recipe'
+
+  useEffect(() => {
+    setName(props.data ? props.data.name : '')
+    setMethodStepsList(props.data ? props.data.method : '')
+    setIngredientList(props.data ? props.data.ingredients : '')
+  }, [props])
+
+  //new recipe logic
   const handleChange = (e) => {
     let key = e.target.name
     let value = e.target.value
@@ -29,19 +40,31 @@ export default function Recipe() {
     setMethodStepObject(method)
   }
 
-  const postRecipe = (e) => {
-    e.preventDefault()
-    fetch('/api/recipes/add', {
-      method: 'POST',
-      headers: { 'Content-type': 'application/json' },
-      body: JSON.stringify({
-        name: name,
-        method: methodStepsList,
-        ingredients: ingredientList,
-      }),
+  const recipe = {
+    name: name,
+    method: methodStepsList,
+    ingredients: ingredientList,
+  }
+
+  function handleAddRecipe() {
+    props.onSubmit({
+      recipe,
     })
-      .then((resp) => resp.json())
-      .then((json) => console.log(json))
+  }
+
+  function handleUpdateRecipe() {
+    console.log(recipe)
+    // props.onSubmit({
+    //   recipe,
+    // })
+  }
+
+  function handleRemoveIngredient(ingredient) {
+    console.log(`Removing ingredient ${ingredient}`)
+    const updatedIngredientList = ingredientList.filter(
+      (item) => item.ingredient_name !== ingredient
+    )
+    setIngredientList(updatedIngredientList)
   }
 
   return (
@@ -49,7 +72,7 @@ export default function Recipe() {
       <div className="recipe-form-container">
         <form className="recipe-form">
           <div className="page-header">
-            <h1>New Recipe</h1>
+            <h1>{formLabel}</h1>
           </div>
 
           {/* recipe name logic */}
@@ -62,7 +85,6 @@ export default function Recipe() {
             ></input>
           </div>
 
-          {/* recipe method logic */}
           <div className="recipe-blurb recipe-element">
             <label>Recipe Method</label>
             <span className="method-span">
@@ -71,11 +93,11 @@ export default function Recipe() {
                 name="step_instructions"
                 type="text"
                 placeholder="Method will be split up based on new lines"
+                defaultValue={methodStepsList}
                 onChange={(e) => handleMethodChange(e)}
               ></textarea>
               <button
                 onClick={(e) => {
-                  console.log(methodStepObject)
                   setMethodStepsList(methodStepObject)
                   e.preventDefault()
                 }}
@@ -153,11 +175,11 @@ export default function Recipe() {
           </div>
 
           {/* recipe preview logic */}
-
           <RecipeTitle recipeName={name}></RecipeTitle>
           <div className="ingredient-method-frame">
             <RecipeIngredientsContainer
               recipeIngredients={ingredientList}
+              onRemoveIngredient={handleRemoveIngredient}
             ></RecipeIngredientsContainer>
             <RecipeMethodContainer
               recipeMethod={
@@ -165,12 +187,16 @@ export default function Recipe() {
               }
             ></RecipeMethodContainer>
           </div>
+
           <button
             onClick={(e) => {
-              postRecipe(e)
+              e.preventDefault()
+              buttonLabel = 'Add Recipe'
+                ? handleAddRecipe()
+                : handleUpdateRecipe()
             }}
           >
-            Submit Recipe
+            {buttonLabel}
           </button>
         </form>
       </div>
