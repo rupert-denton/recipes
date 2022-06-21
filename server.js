@@ -6,11 +6,17 @@ const bodyParser = require('body-parser')
 
 server.use(express.json())
 server.use(bodyParser.json())
+// static assets (js, css, favicon, html)
+server.use(express.static(path.join(__dirname, '/build')))
+// api routes
 server.use('/api/recipes', require('./routes'))
 // xpress.static(path_join(__dirname, '/client/build'))
 
-server.get('/', function (req, res) {
-  res.sendFile(path.join('/build/index.html'))
+// if route don't match, give them the index.html, and let client side routing try
+server.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, '/build/index.html'))
 })
+
+// https://sapidum.herokuapp.com/
 
 module.exports = server
