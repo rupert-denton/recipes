@@ -21,7 +21,6 @@ export default function GetSpecificRecipe() {
     fetch(`/api/recipes/${id}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
         let recipeName = data[0].recipe_name
         let recipeMethod = data[0].recipe_method.split(/\r?\n/)
         setRecipeName(recipeName)

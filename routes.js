@@ -42,6 +42,21 @@ router.post('/add', (req, res) => {
     })
 })
 
+//PATCH /
+router.patch('/update/:id', (req, res) => {
+  const { id, name, method, ingredients } = req.body
+  const data = req.body
+
+  db.updateRecipe(data)
+    .then((result) => {
+      console.log(result)
+    })
+    .catch((err) => {
+      console.error(err)
+      res.status(500).send('Server Error')
+    })
+})
+
 // DELETE /api/delete/:id
 router.post('/delete', (req, res) => {
   const id = Number(req.body.id)
