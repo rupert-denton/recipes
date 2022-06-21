@@ -81,7 +81,7 @@ export default function Recipe(props) {
             <label>Recipe Method</label>
             <span className="method-span">
               <textarea
-                rows="5"
+                rows="20"
                 name="step_instructions"
                 type="text"
                 placeholder="Method will be split up based on new lines"
