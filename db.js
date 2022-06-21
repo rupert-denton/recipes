@@ -58,7 +58,6 @@ function findOrCreateIngredientId(ingredient, db = connection) {
 
 //starting point is here
 async function addNewRecipe(newRecipe, db = connection) {
-  console.log(newRecipe)
   const recipeDetails = {
     recipe_name: newRecipe.name,
     recipe_method: newRecipe.method,
@@ -80,7 +79,41 @@ async function addNewRecipe(newRecipe, db = connection) {
       measure: recipeIngredient.measure,
       quantity: recipeIngredient.quantity,
     }
-    console.log(ingredientRecipeObj)
+
+    return db('ingredientrecipes')
+      .insert(ingredientRecipeObj)
+      .returning('id')
+      .then((result) => {
+        return result[0].id
+      })
+  })
+}
+
+async function updateRecipe(updatedRecipe, db = connection) {
+  const recipeDetails = {
+    recipe_name: updatedRecipe.name,
+    recipe_method: updatedRecipe.method,
+  }
+
+  const ingredientsArray = updatedRecipe.ingredients
+
+  const [{ id: recipeId }] = await db('recipes')
+    .where('id', updatedRecipe.id)
+    .update(recipeDetails)
+    .returning('id')
+  const ingredientsNameAndIds = await getIngredients(ingredientsArray) //returns an array of ids
+  await db('ingredientrecipes').delete().where(`recipe_id`, recipeId)
+
+  ingredientsNameAndIds.forEach((ingredient) => {
+    const recipeIngredient = ingredientsArray.find(
+      (ri) => ri.ingredient_name === ingredient.ingredient_name
+    )
+    const ingredientRecipeObj = {
+      recipe_id: recipeId,
+      ingredient_id: ingredient.ingredient_id,
+      measure: recipeIngredient.measure,
+      quantity: recipeIngredient.quantity,
+    }
 
     return db('ingredientrecipes')
       .insert(ingredientRecipeObj)
@@ -92,8 +125,6 @@ async function addNewRecipe(newRecipe, db = connection) {
 }
 
 function deleteRecipe(id, db = connection) {
-  console.log(id)
-
   return db('ingredientrecipes')
     .delete()
     .where(`recipe_id`, id)
@@ -107,4 +138,5 @@ module.exports = {
   getSpecificRecipe,
   addNewRecipe,
   deleteRecipe,
+  updateRecipe,
 }
