@@ -1,5 +1,5 @@
 function logError(err) {
-  console.error(err.message)
+  console.error(`There is an error here: ${err.message}`)
 }
 
 module.exports = {
