@@ -21,7 +21,9 @@
     "dev:server": "nodemon index.js",
     "dev:client": "react-scripts start",
     "dev": "run-p dev:server dev:client",
-    "build": "react-scripts build",
+    "build": "run-p build:client build:server",
+    "build:client": "react-scripts build",
+    "build:server": "npx knex migrate:latest",
     "test": "jest --watchAll",
     "eject": "react-scripts eject"
   },
