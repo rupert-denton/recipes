@@ -31,9 +31,9 @@ router.post('/add', (req, res) => {
   const { name, method, ingredients } = req.body
   const newRecipe = { name, method, ingredients }
 
-  db.addNewRecipe(newRecipe)
-    .then((result) => {
-      res.redirect(`/`)
+  db.addRecipeWithIngredients(newRecipe)
+    .then(() => {
+      res.sendStatus(201)
     })
     .catch((err) => {
       util.logError(err)
@@ -43,13 +43,13 @@ router.post('/add', (req, res) => {
 //PATCH /
 router.patch('/update/:id', (req, res) => {
   const { id, name, method, ingredients } = req.body
-  const data = req.body
 
-  db.updateRecipe(data)
-    .then((result) => {})
+  db.updateRecipe({ id, name, method, ingredients })
+    .then(() => {
+      res.sendStatus(204)
+    })
     .catch((err) => {
-      console.error(err)
-      res.status(500).send('Server Error')
+      util.logError(err)
     })
 })
 
@@ -58,12 +58,11 @@ router.post('/delete', (req, res) => {
   const id = Number(req.body.id)
 
   db.deleteRecipe(id)
-    .then((result) => {
-      res.redirect('/')
+    .then(() => {
+      res.sendStatus(204)
     })
     .catch((err) => {
-      console.error(err)
-      res.status(500).send('Server Error')
+      util.logError(err)
     })
 })
 
