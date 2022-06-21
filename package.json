@@ -25,6 +25,7 @@
     "test": "jest --watchAll",
     "eject": "react-scripts eject"
   },
+  
   "eslintConfig": {
     "extends": [
       "react-app",
