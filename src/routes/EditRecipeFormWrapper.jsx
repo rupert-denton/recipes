@@ -6,7 +6,6 @@ export default function EditRecipeFormWrapper() {
   let { id } = useParams()
 
   const handleUpdateRecipe = (data) => {
-    console.log(data)
     fetch(`/api/recipes/update/${id}`, {
       method: 'PATCH',
       headers: { 'Content-type': 'application/json' },

@@ -19,7 +19,6 @@ router.get('/:id', (req, res) => {
   let id = req.params.id
   db.getSpecificRecipe(id)
     .then((result) => {
-      console.log(result)
       res.json(result)
     })
     .catch((err) => {
@@ -34,7 +33,6 @@ router.post('/add', (req, res) => {
 
   db.addNewRecipe(newRecipe)
     .then((result) => {
-      console.log(`line 37 routes.js: ${result}`)
       res.redirect(`/`)
     })
     .catch((err) => {
@@ -48,9 +46,7 @@ router.patch('/update/:id', (req, res) => {
   const data = req.body
 
   db.updateRecipe(data)
-    .then((result) => {
-      console.log(result)
-    })
+    .then((result) => {})
     .catch((err) => {
       console.error(err)
       res.status(500).send('Server Error')
