@@ -3,6 +3,7 @@ const server = express()
 const path = require('path')
 
 const bodyParser = require('body-parser')
+console.log('Database_URL', process.env.DATABASE_URL)
 
 server.use(express.json())
 server.use(bodyParser.json())
