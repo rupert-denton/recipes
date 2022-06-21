@@ -18,8 +18,6 @@ function getSpecificRecipe(id, db = connection) {
     .where('recipes.id', id)
 }
 
-//   //look into promise.all
-
 function addNewIngr(ingredientData, db = connection) {
   const ingredient_name = { ingredient_name: ingredientData }
   return db('ingredients')
@@ -31,17 +29,21 @@ function addNewIngr(ingredientData, db = connection) {
 }
 
 async function getIngredients(ingredientsArray, db = connection) {
-  let ingredientObjects = []
-  for (let i = 0; i < ingredientsArray.length; i++) {
-    const id = await findOrCreateIngredientId(ingredientsArray[i]) // rather than all at the same time - in parallel - i guess im confused because i thought a loop does things sequentially
-    ingredientObjects.push(id)
-  }
-  return ingredientObjects
+  // for (let i = 0; i < array.length; i++)
+  // array -> array
+  // [{ name, measure, quantity }] -> [{ id, measure, quantity }]
+  // [{ id }] -> [<div></div>]
+  return await Promise.all(
+    //use Promise.all when dealing with async maps
+    ingredientsArray.map(async (ingredient) => {
+      const { measure, quantity } = ingredient
+      const { ingredient_id } = await findOrCreateIngredient(ingredient)
+      return { ingredient_id, measure, quantity }
+    })
+  )
 }
 
-// this will create if doesn't exist (returning id), or return the id
-// this doesn't need to know about the many to many table
-function findOrCreateIngredientId(ingredient, db = connection) {
+function findOrCreateIngredient(ingredient, db = connection) {
   return db('ingredients')
     .select()
     .first()
@@ -56,74 +58,57 @@ function findOrCreateIngredientId(ingredient, db = connection) {
     })
 }
 
-//starting point is here
-async function addNewRecipe(newRecipe, db = connection) {
-  const recipeDetails = {
-    recipe_name: newRecipe.name,
-    recipe_method: newRecipe.method,
-  }
-  const ingredientsArray = newRecipe.ingredients
-
-  const [{ id: recipeId }] = await db('recipes')
-    .insert(recipeDetails)
+async function addRecipe(recipe, db = connection) {
+  return await db('recipes')
+    .insert(recipe)
     .returning('id')
-  const ingredientsNameAndIds = await getIngredients(ingredientsArray) //returns an array of ids
+    .then((result) => {
+      return result[0].id
+    })
+}
 
-  ingredientsNameAndIds.forEach((ingredient) => {
-    const recipeIngredient = ingredientsArray.find(
-      (ri) => ri.ingredient_name === ingredient.ingredient_name
-    )
-    const ingredientRecipeObj = {
-      recipe_id: recipeId,
-      ingredient_id: ingredient.ingredient_id,
-      measure: recipeIngredient.measure,
-      quantity: recipeIngredient.quantity,
-    }
+async function addRecipeWithIngredients(newRecipe, db = connection) {
+  const { name, method, ingredients } = newRecipe
+  const recipeDetails = {
+    recipe_name: name,
+    recipe_method: method,
+  }
 
-    return db('ingredientrecipes')
-      .insert(ingredientRecipeObj)
-      .returning('id')
-      .then((result) => {
-        return result[0].id
-      })
-  })
+  const recipeId = await addRecipe(recipeDetails)
+  await insertJoinedRecipeWithIngredients(recipeId, ingredients)
+}
+
+async function insertJoinedRecipeWithIngredients(
+  recipeId,
+  ingredients,
+  db = connection
+) {
+  const ingredientsWithIds = await getIngredients(ingredients)
+  const recipeIngredientsManyToManyJoin = ingredientsWithIds.map((ing) => ({
+    recipe_id: recipeId,
+    ...ing,
+  }))
+
+  return db('ingredientrecipes').insert(recipeIngredientsManyToManyJoin)
 }
 
 async function updateRecipe(updatedRecipe, db = connection) {
+  const { id: recipeId, ingredients, name, method } = updatedRecipe
   const recipeDetails = {
-    recipe_name: updatedRecipe.name,
-    recipe_method: updatedRecipe.method,
+    recipe_name: name,
+    recipe_method: method,
   }
 
-  const ingredientsArray = updatedRecipe.ingredients
-
-  const [{ id: recipeId }] = await db('recipes')
-    .where('id', updatedRecipe.id)
-    .update(recipeDetails)
-    .returning('id')
-  const ingredientsNameAndIds = await getIngredients(ingredientsArray) //returns an array of ids
+  await updateRecipeStuffs(recipeId, recipeDetails)
   await db('ingredientrecipes').delete().where(`recipe_id`, recipeId)
-
-  ingredientsNameAndIds.forEach((ingredient) => {
-    const recipeIngredient = ingredientsArray.find(
-      (ri) => ri.ingredient_name === ingredient.ingredient_name
-    )
-    const ingredientRecipeObj = {
-      recipe_id: recipeId,
-      ingredient_id: ingredient.ingredient_id,
-      measure: recipeIngredient.measure,
-      quantity: recipeIngredient.quantity,
-    }
-
-    return db('ingredientrecipes')
-      .insert(ingredientRecipeObj)
-      .returning('id')
-      .then((result) => {
-        return result[0].id
-      })
-  })
+  await insertJoinedRecipeWithIngredients(recipeId, ingredients)
 }
 
+async function updateRecipeStuffs(id, recipe, db = connection) {
+  return await db('recipes').where({ id }).update(recipe)
+}
+
+///delete
 function deleteRecipe(id, db = connection) {
   return db('ingredientrecipes')
     .delete()
@@ -136,7 +121,7 @@ function deleteRecipe(id, db = connection) {
 module.exports = {
   getAllRecipes,
   getSpecificRecipe,
-  addNewRecipe,
+  addRecipeWithIngredients,
   deleteRecipe,
   updateRecipe,
 }
