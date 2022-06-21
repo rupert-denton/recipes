@@ -17,6 +17,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "start": "node index.js",
     "dev:server": "nodemon index.js",
     "dev:client": "react-scripts start",
     "dev": "run-p dev:server dev:client",
