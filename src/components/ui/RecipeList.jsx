@@ -44,7 +44,6 @@ export default function RecipeList() {
 
   return (
     <div className="recipe-list">
-      <h1>Recipes</h1>
       <div className="recipes-list-container">{recipeList}</div>
     </div>
   )

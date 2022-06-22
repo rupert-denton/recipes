@@ -1,12 +1,12 @@
 //external dependencies
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Link } from 'react-router-dom'
 
 //styling
 import './RecipeForm.css'
 
 //components
+import Navbar from '../components/ui/Navbar'
 import RecipeTitle from '../components/ui/RecipeTitle.js'
 import RecipeMethodContainer from '../components/ui/RecipeMethodContainer'
 import RecipeIngredientsContainer from '../components/ui/RecipeIngredientsContainer'
@@ -32,9 +32,9 @@ export default function GetSpecificRecipe() {
 
   return (
     <React.Fragment>
+      <Navbar />
       <div className="recipe-form-container">
         <form className="recipe-form">
-          <Link to="/">Home</Link>
           <RecipeTitle recipeName={recipeName}></RecipeTitle>
           <RecipeIngredientsContainer
             recipeIngredients={ingredients}

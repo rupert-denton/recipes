@@ -1,6 +1,7 @@
 import '../components/ui/RecipeList.css'
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import Navbar from '../components/ui/Navbar'
 
 export default function RecipeList() {
   const [recipes, setRecipes] = useState([])
@@ -48,6 +49,7 @@ export default function RecipeList() {
 
   return (
     <div className="recipe-list">
+      <Navbar />
       <h1>Edit Recipes</h1>
       {recipeList}
     </div>

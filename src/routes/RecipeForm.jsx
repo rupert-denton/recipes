@@ -1,6 +1,7 @@
 import './RecipeForm.css'
 import React, { useState, useEffect } from 'react'
 
+import Navbar from '../components/ui/Navbar'
 import RecipeTitle from '../components/ui/RecipeTitle'
 import RecipeIngredientsContainer from '../components/ui/RecipeIngredientsContainer'
 import RecipeMethodContainer from '../components/ui/RecipeMethodContainer'
@@ -61,6 +62,7 @@ export default function Recipe(props) {
 
   return (
     <div>
+      <Navbar />
       <div className="recipe-form-container">
         <form className="recipe-form">
           <div className="page-header">

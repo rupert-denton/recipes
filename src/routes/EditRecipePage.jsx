@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 // import { Link } from 'react-router-dom'
 
+import Navbar from '../components/ui/Navbar'
 import RecipeTitle from '../components/ui/RecipeTitle'
 import RecipeIngredientsContainer from '../components/ui/RecipeIngredientsContainer'
 import RecipeMethodContainer from '../components/ui/RecipeMethodContainer'
@@ -48,23 +49,9 @@ export default function Recipe() {
     setMethodStepObject(method)
   }
 
-  // const postRecipe = (e) => {
-  //   e.preventDefault()
-  //   fetch('/api/recipes/update', {
-  //     method: 'POST',
-  //     headers: { 'Content-type': 'application/json' },
-  //     body: JSON.stringify({
-  //       name: name,
-  //       method: methodStepsList,
-  //       ingredients: ingredientList,
-  //     }),
-  //   })
-  //     .then((resp) => resp.json())
-  //     .then((json) => console.log(json))
-  // }
-
   return (
     <div>
+      <Navbar />
       <div className="recipe-form-container">
         <form className="recipe-form">
           <div className="page-header">
