@@ -14,3 +14,42 @@
   cursor: pointer;
   background-color: lightcoral;
 }
+
+.recipes-list-container{
+  width: 95vw;
+  padding: 1rem;
+  border-top-style: solid;
+  border-bottom-style: solid;
+}
+
+
+.recipe-card{
+  display: flex;
+    border-style: solid;
+    border-radius: 0.5rem;
+    height: 15rem;
+    width: 10rem;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5rem;
+}
+
+.recipe-image{
+  width: 100%;
+}
+
+
+.recipe-link{
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: black;
+  text-decoration: underline;
+}
+.recipe-link:hover{
+  color: lightgray  ;
+}
+
+.slug-text{
+  font-size: .8rem;
+    font-weight: 400;
+}
