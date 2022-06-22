@@ -21,7 +21,9 @@ export default function RecipeList() {
           <img
             alt="placeholder for a recipe"
             className="recipe-image"
-            src={'/place-holder.png'}
+            src={
+              'https://i.pinimg.com/originals/8c/70/b7/8c70b7a537c15408a19eb92b5c1232c4.jpg'
+            }
           />
         </div>
         <div className="recipe">
